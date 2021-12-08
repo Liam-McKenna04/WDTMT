@@ -70,4 +70,6 @@ for dict in searched_results:
         print('twitter personality')
     if 'instagram.com' in dict['link']: 
         print('instagram personality')
+    if 'wikipedia.org' in dict['link']:
+        print('has wiki')
     
