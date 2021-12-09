@@ -20,12 +20,15 @@ def get_source(url):
         return response
 
     except requests.exceptions.RequestException as e:
-        print(e)
+        print("Exception:", e)
 
-def get_results(query):
+def get_results(query, site):
     
     query = urllib.parse.quote_plus(query)
-    response = get_source("https://www.google.co.uk/search?q=" + query)
+    if site == 'google':
+        response = get_source("https://www.google.co.uk/search?q=" + query)
+    elif site == 'reddit':
+        response = get_source("http://www.reddit.com/search.json?q=" + query)
     
     return response
 
@@ -53,23 +56,19 @@ def parse_results(response):
     return output
 
 def google_search(query):
-    response = get_results(query)
+    response = get_results(query, 'google')
     return parse_results(response)
 
-searched_term = 'pleasedshibe'
-print(searched_term)
+def reddit_search(query):
+    responce = get_results(query, 'reddit')
+    return responce
 
-searched_results = google_search(searched_term)
-# print(searched_results)
-for dict in searched_results:
-    if 'twitch.tv' in dict['link']:
-        print('twitch streamer') # add to list, printing for debugging purposes
-    if 'youtube.com' in dict['link']: #TODO: and over certain theshold of subs, followers, etc
-        print('youtube personality')
-    if 'twitter.com' in dict['link']:
-        print('twitter personality')
-    if 'instagram.com' in dict['link']: 
-        print('instagram personality')
-    if 'wikipedia.org' in dict['link']:
-        print('has wiki')
-    
+
+print(reddit_search('ludwig'))
+
+
+
+
+# searched_term = 'pleasedshibe'
+# print(searched_term)
+# search_set = set()
